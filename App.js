@@ -24,7 +24,6 @@ import CategoryScreen from './screens/CategoryScreen';
 import FavoriteScreen from './screens/FavoriteScreen';
 import DetailScreen from './screens/DetailScreen';
 import PlaceListScreen from './screens/PlaceListScreen';
-import CategoryListScreen from './screens/PlaceListScreen';
 
 const LocationStack = createNativeStackNavigator();
 function LocationStackScreen(){
@@ -37,8 +36,9 @@ function LocationStackScreen(){
         },
         headerTitleStyle: {
           fontFamily: 'Archivo_600SemiBold', 
-          fontWeight: 'normal'
-        }
+          fontWeight: 'normal',
+
+        },
       }}
     >
       <LocationStack.Screen
@@ -69,7 +69,8 @@ function CategoryStackScreen(){
         },
         headerTitleStyle: {
           fontFamily: 'Archivo_600SemiBold', 
-          fontWeight: 'normal'
+          fontWeight: 'normal',
+
         }
       }}
     >
@@ -79,7 +80,7 @@ function CategoryStackScreen(){
       />
       <CategoryStack.Screen
         name="List"
-        component={CategoryListScreen}  
+        component={PlaceListScreen}  
       />
       <CategoryStack.Screen
         name="Details"
@@ -100,7 +101,8 @@ function FavoriteStackScreen(){
         },
         headerTitleStyle: {
           fontFamily: 'Archivo_600SemiBold', 
-          fontWeight: 'normal'
+          fontWeight: 'normal',
+
         }
       }}
     >

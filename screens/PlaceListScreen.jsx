@@ -1,16 +1,16 @@
-import { Button, FlatList, View, StyleSheet } from 'react-native';
+import { FlatList, View, } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Text, Icon } from '@rneui/themed';
 
-
 import { getPlaceData } from '../data/itemData';
 import PlaceListItem from '../components/PlaceListItem';
+import myStyles from '../style/styleSheet';
 
 export default function CategoryListScreen({ navigation, route }){
     const { area, category } = route.params;
     const placeData = getPlaceData();
-    let filteredObjects;
 
+    let filteredObjects;
     if (area) {
         filteredObjects = placeData.filter(item => item.area === area);
     } else if (category) {
@@ -45,35 +45,16 @@ export default function CategoryListScreen({ navigation, route }){
                         }}
                     />
                 </View>
-                <FlatList 
+                {filteredObjects.length > 0 ? 
+                (<FlatList 
                     data={filteredObjects}
                     renderItem={renderListItem}
                     keyExtractor={item => item.id}
-                />
+                    style={myStyles.flatList}
+                />) : 
+                (<Text>No items to display.</Text>)
+                }
             </View>
         </View>
     )
 }
-
-const myStyles = StyleSheet.create({
-    backgroundContainer:{
-        height: '100%',
-        backgroundColor:'#2F2F2F',
-    },
-    background: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        height: '100%',
-    },
-    container:{
-        marginHorizontal: 24,
-        paddingBottom:100,
-    },
-    location:{
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-});

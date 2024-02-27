@@ -14,23 +14,21 @@ export const darkTheme = createTheme({
     components: {
         Button: {
             buttonStyle: {
+                width: '100%',
+                flex: 1,
+                alignItems:'center',
+                justifyContent: 'space-between',
                 raised: true,
                 borderRadius: 12,
                 backgroundColor: themePalette.button,
-                
-            },
-            containerStyle:{
-                width:"100%",
+                paddingVertical: 4,
             },
             titleStyle: {
                 color: themePalette.secondery,
-                fontSize:48,
+                fontSize: 48,
                 fontWeight:'normal',
                 fontFamily: 'Archivo_200ExtraLight',
                 textAlign: 'left',
-            },
-            disabledStyle: {
-                backgroundColor: themePalette.greyDarker,
             },
             icon: {
                 color: themePalette.secondery,
@@ -97,6 +95,20 @@ export const darkTheme = createTheme({
             },
             type: 'clear',
         },
+
+        Chip: {
+            buttonStyle: {
+                raised: true,
+                backgroundColor: themePalette.primary,
+            },
+            titleStyle: {
+                color: themePalette.secondery,
+                fontSize: 10,
+                fontWeight:'normal',
+                fontFamily: 'Archivo_500Medium',
+                margin:-5,
+            },
+        }
     },
 
 

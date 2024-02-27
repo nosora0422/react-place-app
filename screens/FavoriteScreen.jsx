@@ -1,5 +1,7 @@
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import myStyles from '../style/styleSheet';
+
 export default function FavoriteScreen(){
     return(
         <View style={myStyles.backgroundContainer}>
@@ -11,22 +13,3 @@ export default function FavoriteScreen(){
         </View>
     )
 }
-
-const myStyles = StyleSheet.create({
-    backgroundContainer:{
-        height: '100%',
-        backgroundColor:'#2F2F2F',
-    },
-    background: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        height: '100%',
-    },
-    container:{
-        marginHorizontal: 24,
-        paddingBottom:100,
-    },
-
-});

@@ -1,21 +1,43 @@
-import { ScrollView, View, Image, StyleSheet, Linking } from 'react-native';
+import { useRef } from 'react';
+import { ScrollView, View, Image, StyleSheet, Linking, TouchableOpacity, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Text, Icon, Button } from '@rneui/themed';
 
 import { getPlaceById } from '../data/itemData';
 
+import Carousel from 'react-native-anchor-carousel';
+import myStyles from '../style/styleSheet';
 
 export default function DetailScreen({ route }){
     const { placeId } = route.params;
     const currentPlace = getPlaceById(placeId);
 
+    //it opens google map and show the location of the item
     const openGoogleMaps = () => {
         const address = encodeURIComponent(currentPlace.address);
         const url = `https://www.google.com/maps/search/?api=1&query=${address}`;
         Linking.openURL(url);
     };
         
+    const carouselRef = useRef(null);
+    const { width: windowWidth } = Dimensions.get('window');
 
+    const renderSlide = ({ item, index }) => (
+        <TouchableOpacity
+            activeOpacity={1}
+            style={[myStyles.slideItem]}
+            onPress={() => {
+                carouselRef.current.scrollToIndex(index);
+            }}
+        >
+            <Image 
+                source={item}
+                style={myStyles.img}
+            />
+        </TouchableOpacity>
+    );
+
+    // console.log(currentPlace.slideImg);
 
     return(
         <ScrollView style={myStyles.backgroundContainer}>
@@ -25,13 +47,22 @@ export default function DetailScreen({ route }){
             />
             <View style={myStyles.container}>
                 <View>
-                    <Text h3>Vancouver &#62; Restaurant</Text>
+                    <Text h3>{currentPlace.area} &#62; {currentPlace.category}</Text>
                     <Text h1>{currentPlace.name}</Text>
                 </View>
-                <Image 
-                    source={currentPlace.img}
-                    style={myStyles.img}
+                <Carousel 
+                    style={myStyles.slide}
+                    data={currentPlace.slideImg}
+                    renderItem={renderSlide}
+                    initialIndex={0}
+                    itemWidth={windowWidth * 0.7}
+                    separatorWidth={15}
+                    containerWidth={windowWidth}
+                    inActiveOpacity={0.3}
+                    ref={carouselRef}
+                    itemContainerStyle={myStyles.img}
                 />
+                
                 <View style={myStyles.detailList}>
                     <View style={myStyles.detailListItem}>
                         <Icon
@@ -57,7 +88,7 @@ export default function DetailScreen({ route }){
                         />
                         <Text>
                             {currentPlace.open} 
-                            {currentPlace.close === 'Open 24 hours' ? '' : - currentPlace.close}
+                            {currentPlace.close === 'Open 24 hours' ? '' : "-" +  currentPlace.close}
                         </Text>
                     </View>
                     <View style={myStyles.detailListItem}>
@@ -118,34 +149,3 @@ export default function DetailScreen({ route }){
         </ScrollView>
     )
 }
-
-const myStyles = StyleSheet.create({
-    backgroundContainer:{
-        height: '100%',
-        backgroundColor:'#2F2F2F',
-    },
-    background: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        height: '100%',
-    },
-    container:{
-        marginHorizontal: 24,
-        paddingBottom:100,
-    },
-    img:{
-        width: '100%', 
-        aspectRatio: 1,
-        borderRadius: 12,
-    },
-    detailList:{
-        flexDirection: 'column',
-        gap: 8,
-        padding: 12,
-    },
-    detailListItem:{
-        flexDirection: 'row',
-    }
-});
